@@ -1,4 +1,8 @@
-{{- if eq (lookup "v1" "ConfigMap" "demo-system" "pbi-0.1.16-jira-ticket1").data.status "done" }}
+{{- $chartname := include "fireworks-app.chart" $ -}}
+{{- $ticketname := printf "%s-jira-ticket1" $chartname -}}
+{{- $ticket := lookup "v1" "ConfigMap" "demo-system" $ticketname -}}
+{{- $status := (index ($ticket.data | default dict) "status" | default "") -}}
+{{- if eq $status "done" -}}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -12,5 +16,5 @@ data:
   workspace-dev-id: ""
   workspace-uat-id: ""
   workspace-pro-id: ""
-{{- end }}
 ...
+{{- end }}
