@@ -10,5 +10,5 @@ metadata:
   namespace: demo-system
 spec:
   chart:
-    url: https://github.com/AndreaTosti/krateo-v2-template-fireworksapp/releases/download/0.1.18/pbi-0.1.18.tgz
+    url: https://github.com/AndreaTosti/krateo-v2-template-fireworksapp/releases/download/0.1.19/pbi-0.1.19.tgz
   deletionPolicy: Delete
