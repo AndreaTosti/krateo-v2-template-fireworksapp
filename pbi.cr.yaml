@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 apiVersion: composition.krateo.io/v0-1-23
+=======
+apiVersion: composition.krateo.io/v0-1-24
+>>>>>>> e2a6c8d96f5aa000c3a962a8d6bea0a1a86ddbd9
 kind: Pbi
 metadata:
   annotations:

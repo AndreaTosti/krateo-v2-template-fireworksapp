@@ -8,9 +8,9 @@ metadata:
   labels:
     {{- include "fireworks-app.labels" $ | nindent 4 }}
 data:
-  id: {{ $ticket.id }} 
-  title: {{ $ticket.title }} 
+  id: {{ $ticket.id }}
+  title: {{ $ticket.title }}
   body: {{ $ticket.body }}
   status: ""
-{{- end}}
 ...
+{{- end }}

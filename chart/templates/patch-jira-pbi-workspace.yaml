@@ -1,3 +1,4 @@
+{{- if eq (include "fireworks-app.patch-enabled" .) "true" }}
 {{- range $environment := .Values.environments }}
 ---
 apiVersion: krateo.io/v1alpha1
@@ -51,5 +52,6 @@ spec:
     transforms:
       - .
       - printf "%s"
-{{- end }}
 ...
+{{- end }}
+{{- end }}

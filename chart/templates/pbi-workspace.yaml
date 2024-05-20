@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 {{- $chartname := include "fireworks-app.chart" $ -}}
 {{- $ticketname := printf "%s-jira-ticket1" $chartname -}}
 {{- $ticket := lookup "v1" "ConfigMap" "demo-system" $ticketname -}}
 {{- if and $ticket (eq $ticket.data.status "done") }}
+=======
+{{- if and (include "fireworks-app.is-ticket1-solved" $) (include "fireworks-app.is-ticket2-solved" $) }}
+>>>>>>> e2a6c8d96f5aa000c3a962a8d6bea0a1a86ddbd9
 {{- range $environment := .Values.environments }}
 ---
 apiVersion: v1
@@ -16,5 +20,6 @@ data:
   precondition-ticket2-status: ""
   id: ""
   env: {{ $environment }}
+...
 {{- end }}
 {{- end }}

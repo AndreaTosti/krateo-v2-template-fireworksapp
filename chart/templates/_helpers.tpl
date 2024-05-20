@@ -1,17 +1,12 @@
+{{- define "fireworks-app.patch-enabled" -}}
+false
+{{- end }}
+
 {{/*
 Expand the name of the chart.
 */}}
 {{- define "fireworks-app.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-{{/*does not works*/}}
-{{- define "fireworks-app.is-dev-env" -}}
-{{- if eq .Values.infra.env "dev" }}
-true
-{{- else }}
-false
-{{- end }}
 {{- end }}
 
 {{- define "fireworks-app.is-dev-env-2" -}}
@@ -44,6 +39,13 @@ If release name contains chart name it will be used as a full name.
 Create chart name and version as used by the chart label.
 */}}
 {{- define "fireworks-app.chart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Create chart name and version as used by the chart label.
+*/}}
+{{- define "fireworksapp.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -90,4 +92,27 @@ Compose fromRepo URL
 */}}
 {{- define "fireworks-app.fromRepoUrl" -}}
 {{- printf "%s/%s/%s" .Values.git.fromRepo.scmUrl .Values.git.fromRepo.org .Values.git.fromRepo.name }}
+{{- end }}
+
+{{/*Check if all tickets has been solved*/}}
+{{/*not works*/}}
+{{- define "fireworks-app.are-tickets-solved" -}}
+{{- ternary "true" "" (and (include "fireworks-app.is-ticket1-solved" $) (include "fireworks-app.is-ticket2-solved" $)) -}}
+{{- end }}
+
+{{/*https://github.com/helm/helm/issues/10382*/}}
+{{/*{{- $resource := lookup "v1" "ConfigMap" "demo-system" "pbi-0.1.23-jira-ticket1" -}}*/}}
+{{/*{{- $resource := lookup "v1" "ConfigMap" "demo-system" (printf "%s-jira-ticket1" (include "fireworks-app.chart" $)) -}}*/}}
+{{/*{{- $resource := lookup "v1" "ConfigMap" "demo-system" (printf "%s-jira-ticket1" (include "fireworks-app.chart" $)) -}}*/}}
+{{/*{{- if and $resource (eq $resource.data.status "done") -}}*/}}
+{{/*Check if ticket 1 has been solved*/}}
+{{- define "fireworks-app.is-ticket1-solved" -}}
+{{- $resource := lookup "v1" "ConfigMap" "demo-system" (printf "%s-jira-ticket1" (include "fireworks-app.chart" $)) }}
+{{- ternary "true" "" (and $resource (eq $resource.data.status "done")) }}
+{{- end }}
+
+{{/*Check if ticket 2 has been solved*/}}
+{{- define "fireworks-app.is-ticket2-solved" -}}
+{{- $resource := lookup "v1" "ConfigMap" "demo-system" "pbi-0.0.1-jira-ticket2" }}
+{{- ternary "true" "" (and $resource (eq $resource.data.status "done")) }}
 {{- end }}
