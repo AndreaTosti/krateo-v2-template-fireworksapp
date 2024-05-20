@@ -18,4 +18,3 @@ data:
   env: {{ $environment }}
 {{- end }}
 {{- end }}
-...
