@@ -1,5 +1,5 @@
 {{- define "fireworks-app.patch-enabled" -}}
-false
+true
 {{- end }}
 
 {{/*
