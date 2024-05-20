@@ -1,9 +1,7 @@
 {{- $chartname := include "fireworks-app.chart" $ -}}
 {{- $ticketname := printf "%s-jira-ticket1" $chartname -}}
 {{- $ticket := lookup "v1" "ConfigMap" "demo-system" $ticketname -}}
-{{- $status := (index ($ticket.data | default dict) "status" | default "") -}}
-{{- if eq $status "done" -}}
-{{- range $environment := .Values.environments }}
+{{- if and $ticket (eq $ticket.data.status "done") }}
 ---
 apiVersion: v1
 kind: ConfigMap
