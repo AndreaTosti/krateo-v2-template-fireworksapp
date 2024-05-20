@@ -1,4 +1,3 @@
-{{- if and (include "fireworks-app.is-ticket1-solved" $) (include "fireworks-app.is-ticket2-solved" $) }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -13,4 +12,3 @@ data:
   workspace-uat-id: ""
   workspace-pro-id: ""
 ...
-{{- end }}
