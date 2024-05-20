@@ -2,6 +2,7 @@
 {{- $ticketname := printf "%s-jira-ticket1" $chartname -}}
 {{- $ticket := lookup "v1" "ConfigMap" "demo-system" $ticketname -}}
 {{- if and $ticket (eq $ticket.data.status "done") }}
+{{- range $environment := .Values.environments }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -13,8 +14,8 @@ metadata:
 data:
   precondition-ticket1-status: ""
   precondition-ticket2-status: ""
-  id: {{ $status }}
+  id: ""
   env: {{ $environment }}
 {{- end }}
-...
 {{- end }}
+...
